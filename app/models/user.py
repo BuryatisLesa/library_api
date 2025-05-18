@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String
-from app.db.base import Base
+from app.db.base_class import Base
 
 
 class User(Base):
-    __tablename__ = "users" #название таблицы
+    __tablename__ = "users"
 
     # Создаем структуру нашей таблицы пользователей
     id = Column(Integer, primary_key=True, index=True)

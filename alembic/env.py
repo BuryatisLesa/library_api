@@ -21,8 +21,8 @@ if config.config_file_name is not None:
 # target_metadata = None
 # ==========================================#
 # импортирую мои модели
-from app.db.base import Base
-from app.models import user
+from app.db.base_class import Base
+from app.db import base # регистрации моделей
 
 target_metadata = Base.metadata
 #==========================================#
