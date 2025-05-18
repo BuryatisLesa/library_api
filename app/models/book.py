@@ -11,3 +11,4 @@ class Book(Base):
     title = Column(String, nullable=False)
     author = Column(String, nullable=False)
     available = Column(Boolean, default=True)
+    copies_available = Column(Integer, nullable=False, default=1)
