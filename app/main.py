@@ -1,4 +1,4 @@
-from app.routers import test_db, auth, protected, books, readers
+from app.routers import test_db, auth, protected, books, readers, borrow
 from fastapi import FastAPI
 
 app = FastAPI()
@@ -12,3 +12,5 @@ app.include_router(protected.router, tags=["Protected"])
 app.include_router(books.router, tags=["Books"])
 
 app.include_router(readers.router, tags=["Readers"])
+
+app.include_router(borrow.router, tags=["Borrow"]) 

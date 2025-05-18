@@ -9,3 +9,4 @@ pydantic
 pytest
 pydantic[email]
 python-multipart
+httpx

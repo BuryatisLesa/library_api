@@ -2,13 +2,12 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 
-
 class BorrowRequest(BaseModel):
     book_id: int
-    reader_id: str
+    reader_id: int
 
 class ReturnRequest(BaseModel):
-    book_id: int
+    borrow_id: int
 
 class BorrowInfo(BaseModel):
     id: int
