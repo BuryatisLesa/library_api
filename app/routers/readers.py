@@ -15,7 +15,7 @@ def create_reader(reader: ReaderCreate, db: Session = Depends(get_db)):
     new_reader = Reader(**reader.dict())
     db.add(new_reader)
     db.commit()
-    db.refresh()
+    db.refresh(new_reader)
 
     return new_reader
 
