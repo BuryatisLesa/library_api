@@ -14,7 +14,7 @@ def create_book(book: BookCreate, db: Session = Depends(get_db)):
     new_book = Book(**book.dict())
     db.add(new_book)
     db.commit()
-    db.refresh()
+    db.refresh(new_book)
     return new_book
 
 # получение все имеющих книг
@@ -56,6 +56,6 @@ def update_book(book_id:int, update_data: BookUpdate, db: Session = Depends(get_
     
 
     db.commit()
-    db.refresh()
-    return get_book
+    db.refresh(book)
+    return book
 
