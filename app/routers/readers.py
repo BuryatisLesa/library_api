@@ -33,7 +33,7 @@ def get_reader(reader_id: int, db: Session = Depends(get_db)):
     return reader
 
 # удаление читателя
-@router.delete("readers/{reader_id}", response_model=ReaderOut)
+@router.delete("/readers/{reader_id}", response_model=ReaderOut)
 def delete_reader(reader_id: int, db: Session = Depends(get_db)):
     reader = db.query(Reader).filter(Reader.id == reader_id).first()
     if not reader:
@@ -45,7 +45,7 @@ def delete_reader(reader_id: int, db: Session = Depends(get_db)):
     return reader
 
 # обновление данных читателя
-@router.put("readers/{reader_id},", response_model=ReaderOut)
+@router.put("/readers/{reader_id},", response_model=ReaderOut)
 def update_reader(reader_id: int, update_data: ReaderUpdate, db: Session = Depends(get_db)):
     reader = db.query(Reader).filter(Reader.id == reader_id).first()
     if not reader:
