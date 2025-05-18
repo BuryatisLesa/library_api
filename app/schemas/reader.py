@@ -15,3 +15,10 @@ class ReaderOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ReaderUpdate(BaseModel):
+    name: str | None = None
+    email: EmailStr | None = None
+    active: bool | None = None
+

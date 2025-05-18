@@ -8,6 +8,7 @@ from typing import List
 
 router = APIRouter()
 
+# создание новой книги
 @router.post("/books", response_model=BookOut)
 def create_book(book: BookCreate, db: Session = Depends(get_db)):
     new_book = Book(**book.dict())
@@ -16,11 +17,12 @@ def create_book(book: BookCreate, db: Session = Depends(get_db)):
     db.refresh()
     return new_book
 
+# получение все имеющих книг
 @router.get("/books", response_model=List[BookOut])
 def get_books(db: Session = Depends(get_db)):
     return db.query(Book).all()
 
-
+# получение одной книги
 @router.get("/books/{book_id}", response_model=BookOut)
 def get_book(book_id: int, db: Session = Depends(get_db)):
     book = db.query(Book).filter(Book.id == book_id).first()
@@ -29,7 +31,7 @@ def get_book(book_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Книга не найдена")
     return book
 
-
+# удлаение книги
 @router.delete("/books/{book_id}", response_model=BookOut)
 def delete_book(book_id: int, db: Session = Depends(get_db)):
     book = db.query(Book).filter(Book.id == book_id).first()
@@ -41,7 +43,7 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
 
     return book
 
-
+# обновление данных книги
 @router.put("/books/{book_id}", response_model=BookOut)
 def update_book(book_id:int, update_data: BookUpdate, db: Session = Depends(get_db)):
     book = db.query(Book).filter(Book.id == book_id).first()
