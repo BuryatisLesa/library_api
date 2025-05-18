@@ -1,9 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.schemas.user import UserCreate, UserOut
 from app.models.user import User
 from app.db.deps import get_db
-from app.core.security import get_password_hash
+from app.core.security import get_password_hash, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
+from datetime import timedelta
 
 router = APIRouter()
 
@@ -28,3 +30,25 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return new_user
+
+@router.post("/login")
+def login_user(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
+    # фильтрация таблицы users по email/username
+    user = db.query(User).filter(User.email == form_data.username).first()
+
+    # валидация пароля
+    if not user or not verify_password(form_data.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Неверный email или пароль"
+        )
+    # создание JWT
+    access_token =  create_access_token(
+        data={"sub": user.email},
+        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
+
+    return {"access_token": access_token, "token_type": "bearer"}
