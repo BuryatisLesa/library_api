@@ -13,4 +13,4 @@ class UserOut(BaseModel):
     email: EmailStr
 
     class Config:
-        orm_mode = True  # для работы с ORM sqlalchemy-объектами
+        from_attributes = True  # для работы с ORM sqlalchemy-объектами
