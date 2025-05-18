@@ -15,3 +15,10 @@ class BookOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class BookUpdate(BaseModel):
+    title: str | None = None
+    author: str | None = None
+    available: bool | None = None
+    
